@@ -1,0 +1,9 @@
+[site/templates/**.php]
+indent_size = 2
+
+[site/snippets/**.php]
+indent_size = 2
+
+[package.json,.{babelrc,editorconfig,eslintrc,lintstagedrc,stylelintrc}]
+indent_style = space
+indent_size = 2

@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.3.7",
+    "chokidar": "^3.5.2",
+    "cssnano": "^5.0.8",
+    "esbuild": "^0.13.8",
+    "postcss": "^8.3.9",
+    "tailwindcss": "^2.2.17"
+  },
+  "name": "endorfine",
+  "version": "1.0.0",
+  "main": "scripts/build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node scripts/build.js",
+    "watch": "node scripts/watch.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
