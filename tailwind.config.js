@@ -1,6 +1,3 @@
-
-
-
 module.exports = {
   purge: [
     './www/site/templates/**/*.php',
