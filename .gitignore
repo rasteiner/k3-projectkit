@@ -1,18 +1,1 @@
-# Dev files
-# ------------
-node_modules
-/www/vendor
-
-
-# System files
-# ------------
-
-Icon
-.DS_Store
-
-# Editors
-# ---------------
-*.sublime-project
-*.sublime-workspace
-/.vscode
-/.idea
+node_modules/

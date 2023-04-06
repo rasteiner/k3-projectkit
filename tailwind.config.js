@@ -1,16 +1,38 @@
+const plugin = require('tailwindcss/plugin');
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: [
-    './www/site/templates/**/*.php',
+  experimental: {
+    optimizeUniversalDefaults: true
+  },
+  content: [
+    './src/**/*.vue',
+    './src/js/**/*.ts',
     './www/site/snippets/**/*.php',
-    './src/**/*.{js,jsx,ts,tsx,vue}',
+    './www/site/templates/**/*.php',
   ],
-  mode: 'jit',
-  darkMode: false, // or 'media' or 'class'
+  safelist: [
+    {
+      
+    }
+  ],
   theme: {
+    
   },
-  variants: {
-    extend: {},
+  corePlugins: {
+    //preflight: false,
   },
+  /*
   plugins: [
+    plugin(({addVariant, e}) => {
+      addVariant('sending', ({modifySelectors}) => {
+        modifySelectors(({ className }) => `form.sending .${e('sending:' + className)}`)
+      });
+
+      addVariant('sent', ({ modifySelectors }) => {
+        modifySelectors(({ className }) => `form.sent .${e('sent:' + className)}`)
+      });
+    })
   ],
+  */
 }

@@ -1,21 +1,32 @@
 {
-  "devDependencies": {
-    "autoprefixer": "^10.3.7",
-    "chokidar": "^3.5.2",
-    "cssnano": "^5.0.8",
-    "esbuild": "^0.13.8",
-    "postcss": "^8.3.9",
-    "tailwindcss": "^2.2.17"
-  },
-  "name": "endorfine",
-  "version": "1.0.0",
-  "main": "scripts/build.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node scripts/build.js",
-    "watch": "node scripts/watch.js"
+    "dev": "NODE_ENV=development npm-run-all clean --parallel build:js dev:css",
+    "build": "NODE_ENV=production npm-run-all clean --parallel build:* --sequential uglify brotli",
+    "build:css": "postcss src/css/main.css --no-map -o www/assets/css/main.css",
+    "build:js": "node ./scripts/javascript.js",
+    "dev:css": "postcss src/css/main.css --watch -o www/assets/css/main.css",
+    "clean": "node ./scripts/clean.js",
+    "uglify": "node ./scripts/uglify.js",
+    "brotli": "node ./scripts/brotli.js"
   },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "brotli": "^1.3.3",
+    "cssnano": "^5.1.14",
+    "esbuild": "^0.17.8",
+    "esbuild-plugin-vue3": "^0.3.2",
+    "esbuild-plugin-glsl": "^1.1.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": ">=8.4.0 <9.0.0",
+    "postcss-cli": "^10.1.0",
+    "postcss-import": "^15.1.0",
+    "postcss-nesting": "^11.2.0",
+    "tailwindcss": "^3.3.0",
+    "fast-glob": "^3.2.12",
+    "uglify-js": "^3.17.4"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3",
+    "vue": "^3.2.47"
+  }
 }

@@ -1,0 +1,85 @@
+# Kirby .htaccess
+# revision 2022-09-15
+
+# rewrite rules
+<IfModule mod_rewrite.c>
+
+# enable awesome urls. i.e.:
+# http://yourdomain.com/about-us/team
+RewriteEngine on
+
+# make sure to set the RewriteBase correctly
+# if you are running the site in a subfolder;
+# otherwise links or the entire site will break.
+#
+# If your homepage is http://yourdomain.com/mysite,
+# set the RewriteBase to:
+#
+# RewriteBase /mysite
+
+# In some environments it's necessary to
+# set the RewriteBase to:
+#
+# RewriteBase /
+
+# block files and folders beginning with a dot, such as .git
+# except for the .well-known folder, which is used for Let's Encrypt and security.txt
+RewriteRule (^|/)\.(?!well-known\/) index.php [L]
+
+# block all files in the content folder from being accessed directly
+RewriteRule ^content/(.*) index.php [L]
+
+# block all files in the site folder from being accessed directly
+RewriteRule ^site/(.*) index.php [L]
+
+# block direct access to Kirby and the Panel sources
+RewriteRule ^kirby/(.*) index.php [L]
+
+# Cachebuster
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)\.(\d+)\.(js|css)$ $1.$3 [L]
+
+# Serve brotli compressed JS files if they exist and the client accepts br.
+RewriteCond %{HTTP:Accept-encoding} br
+RewriteCond %{REQUEST_FILENAME}\.br -s
+RewriteRule ^(.*)\.js $1\.js\.br [QSA]
+RewriteRule \.js\.br$ - [T=text/javascript,E=no-gzip:1]
+
+# Serve brotli compressed CSS files if they exist and the client accepts br.
+RewriteCond %{HTTP:Accept-encoding} br
+RewriteCond %{REQUEST_FILENAME}\.br -s
+RewriteRule ^(.*)\.css $1\.css\.br [QSA]
+RewriteRule \.css\.br$ - [T=text/css,E=no-gzip:1]
+
+
+# make site links work
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*) index.php [L]
+<FilesMatch "(\.js\.br|\.css\.br)$">
+  # Serve correct encoding type.
+  Header set Content-Encoding br
+  # Force proxies to cache gzipped & non-gzipped css/js files separately.
+  Header append Vary Accept-Encoding
+</FilesMatch>
+
+</IfModule>
+
+<IfModule php_module>
+php_value upload_max_filesize 100M
+php_value post_max_size 100M
+php_value max_execution_time 300
+php_value max_input_time 300
+php_value memory_limit 256M
+</IfModule>
+
+# pass the Authorization header to PHP
+SetEnvIf Authorization "(.+)" HTTP_AUTHORIZATION=$1
+
+<FilesMatch ".(gif|jpg|jpeg|png|avif|webp|ico|js|css|woff|woff2|svg)$">  
+Header set Cache-Control "max-age=31536000"  
+</FilesMatch>  
+
+<IfModule mod_mime.c>
+  AddType image/avif avif
+</IfModule>
