@@ -21,6 +21,10 @@ function compressFolder(distDir) {
       quality: 11,
       lgwin: 22
     });
+    
+    if(!compressed) return; // skip if compression failed
+    if(compressed.length >= fileContents.length) return; // skip if compressed file is larger than original file
+    
     fs.writeFileSync(filePath + '.br', compressed);
       
     console.log(`${file} - ${fileContents.length} → ${compressed.length}`);
